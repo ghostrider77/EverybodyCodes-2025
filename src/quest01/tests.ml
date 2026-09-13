@@ -14,6 +14,7 @@ let tests =
       let result = Quest.follow_instructions names instructions in
       assert_equal expected result ~printer:(Printf.sprintf "%S")
       );
+
     "should find the name following the circular instructions" >:: (fun _ ->
       let lines = [
         "Vyrdax,Drakzyph,Fyrryn,Elarzris";
@@ -25,6 +26,7 @@ let tests =
       let result = Quest.follow_circular_instructions names instructions in
       assert_equal expected result ~printer:(Printf.sprintf "%S")
       );
+
     "should return the first name following the circular swap instructions" >:: (fun _ ->
       let lines = [
         "Vyrdax,Drakzyph,Fyrryn,Elarzris";
