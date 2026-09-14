@@ -16,6 +16,13 @@ let tests =
       let expected = 1274509803922 in
       assert_equal expected result ~printer:(Printf.sprintf "%d")
       );
+
+    "should calculate the number of full turns of the last wheel when wheels are in pair" >:: (fun _ ->
+      let cogwheels = [(5, 5); (7, 21); (18, 36); (27, 27); (10, 50); (10, 50); (11, 11)] in
+      let result = Quest.calc_number_of_full_turns_of_last_gear_for_paired_wheels cogwheels 100 in
+      let expected = 6818 in
+      assert_equal expected result ~printer:(Printf.sprintf "%d")
+      );
   ]
 
 
