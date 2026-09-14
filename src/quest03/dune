@@ -4,8 +4,8 @@
  (modules quest))
 
 (executables
- (names main1)
- (modules main1)
+ (names main1 main2)
+ (modules main1 main2)
  (libraries quest03))
 
 (test

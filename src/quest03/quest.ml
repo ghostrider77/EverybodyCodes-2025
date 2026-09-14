@@ -9,3 +9,10 @@ let parse_input line =
 
 let find_sum_of_unique_elements crates =
   IntSet.fold (+) (IntSet.of_list crates) 0
+
+
+let find_sum_of_smallest_set_of_give_size crates k =
+  crates
+    |> List.sort_uniq compare
+    |> List.take k
+    |> List.fold_left (+) 0
