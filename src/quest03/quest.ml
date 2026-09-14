@@ -12,7 +12,4 @@ let find_sum_of_unique_elements crates =
 
 
 let find_sum_of_smallest_set_of_give_size crates k =
-  crates
-    |> List.sort_uniq compare
-    |> List.take k
-    |> List.fold_left (+) 0
+  List.(crates |> sort_uniq Stdlib.compare |> take k |> fold_left (+) 0)
