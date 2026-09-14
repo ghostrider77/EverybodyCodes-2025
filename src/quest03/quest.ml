@@ -1,3 +1,4 @@
+module IntMap = Map.Make(Int)
 module IntSet = Set.Make(Int)
 
 
@@ -13,3 +14,11 @@ let find_sum_of_unique_elements crates =
 
 let find_sum_of_smallest_set_of_given_size crates k =
   List.(crates |> sort_uniq Stdlib.compare |> take k |> fold_left (+) 0)
+
+
+let find_maximum_occurrence crates =
+  let increment = function
+    | None -> Some 1
+    | Some v -> Some (v + 1) in
+  let occurrences = List.fold_left (fun acc n -> IntMap.update n increment acc) IntMap.empty crates in
+  IntMap.fold (fun _ count acc -> max count acc) occurrences 0

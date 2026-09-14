@@ -19,6 +19,16 @@ let tests =
       let expected = 781 in
       assert_equal expected result ~printer:(Printf.sprintf "%d")
       );
+
+      "should calculate the maximum occurrence of crates" >:: (fun _ ->
+      let crates = [
+        4; 51; 13; 64; 57; 51; 82; 57; 16; 88; 89; 48; 32; 49; 49; 2; 84;
+        65; 49; 43; 9; 13; 2; 3; 75; 72; 63; 48; 61; 14; 40; 77
+        ] in
+      let result = Quest.find_maximum_occurrence crates in
+      let expected = 3 in
+      assert_equal expected result ~printer:(Printf.sprintf "%d")
+      );
   ]
 
 
