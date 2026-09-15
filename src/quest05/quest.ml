@@ -27,3 +27,4 @@ let get_sword_quality xs =
     |> build_fishbone
     |> List.map (fun {spine; _} -> string_of_int spine)
     |> String.concat ""
+    |> int_of_string
