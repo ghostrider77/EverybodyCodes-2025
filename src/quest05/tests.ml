@@ -2,7 +2,7 @@ open OUnit2
 
 
 let tests =
-  "quest03" >::: [
+  "quest05" >::: [
     "should calculate the quality of the sword" >:: (fun _ ->
       let numbers = [5; 3; 7; 8; 9; 10; 4; 5; 7; 8; 8] in
       let result = Quest.get_sword_quality numbers in

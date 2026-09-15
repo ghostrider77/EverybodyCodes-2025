@@ -2,7 +2,7 @@ open OUnit2
 
 
 let tests =
-  "quest03" >::: [
+  "quest04" >::: [
     "should calculate the number of full turns of the last wheel" >:: (fun _ ->
       let cogwheels = [102; 75; 50; 35; 13] in
       let result = Quest.calc_number_of_full_turns_of_last_gear cogwheels 2025 in
