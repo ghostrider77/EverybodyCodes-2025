@@ -1,0 +1,14 @@
+(library
+ (name quest07)
+ (wrapped false)
+ (modules quest))
+
+(executables
+ (names main1)
+ (modules main1)
+ (libraries quest07))
+
+(test
+ (name tests)
+ (modules tests)
+ (libraries ounit2 quest07))
