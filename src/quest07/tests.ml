@@ -50,6 +50,51 @@ let tests =
       let expected = 23 in
       assert_equal expected result ~printer:(Printf.sprintf "%d")
       );
+
+    "should calculate the number of possible names of length between 7 and 11 with a give prefix" >:: (fun _ ->
+      let names = ["Xaryt"] in
+      let rules = [
+        ('X', ['a'; 'o']);
+        ('a', ['r'; 't']);
+        ('r', ['y'; 'e'; 'a']);
+        ('h', ['a'; 'e'; 'v']);
+        ('t', ['h']);
+        ('v', ['e']);
+        ('y', ['p'; 't']);
+        ] in
+      let result = Quest.calc_nr_of_unique_prefixes names (Quest.CharMap.of_list rules) 7 11 in
+      let expected = 25 in
+      assert_equal expected result ~printer:(Printf.sprintf "%d")
+      );
+
+    "should calculate the number of possible names of length between 7 and 11 with guve prefixes" >:: (fun _ ->
+      let names = ["Khara"; "Xaryt"; "Noxer"; "Kharax"] in
+      let rules = [
+        ('r', ['v'; 'e'; 'a'; 'g'; 'y']);
+        ('a', ['e'; 'v'; 'x'; 'r'; 'g']);
+        ('e', ['r'; 'x'; 'v'; 't']);
+        ('h', ['a'; 'e'; 'v']);
+        ('g', ['r'; 'y']);
+        ('y', ['p'; 't']);
+        ('i', ['v'; 'r']);
+        ('K', ['h']);
+        ('v', ['e']);
+        ('B', ['r']);
+        ('t', ['h']);
+        ('N', ['e']);
+        ('p', ['h']);
+        ('H', ['e']);
+        ('l', ['t']);
+        ('z', ['e']);
+        ('X', ['a']);
+        ('n', ['v']);
+        ('x', ['z']);
+        ('T', ['i']);
+        ] in
+      let result = Quest.calc_nr_of_unique_prefixes names (Quest.CharMap.of_list rules) 7 11 in
+      let expected = 1154 in
+      assert_equal expected result ~printer:(Printf.sprintf "%d")
+      );
   ]
 
 
