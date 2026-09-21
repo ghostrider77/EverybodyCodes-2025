@@ -9,8 +9,8 @@ let tests =
         "2:CTTGAATTGGGCCGTTTACCTGGTTTAACCAT";
         "3:CTAGCGCTGAGCTGGCTGCCTGGTTGACCGCG";
       ] in
-      let a, b, c = Quest.parse_input input_lines in
-      let result = Quest.calc_degree_of_similarity a b c in
+      let dnas = Quest.parse_input input_lines in
+      let result = Quest.calc_degree_of_similarity_for_three_dnas dnas in
       let expected = 414 in
       assert_equal expected result ~printer:(Printf.sprintf "%d")
       );
