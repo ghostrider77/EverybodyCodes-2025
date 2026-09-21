@@ -1,5 +1,5 @@
 type nucleotide = A | C | G | T
-type scale = {dna : nucleotide list}
+type scale = {id : int; dna : nucleotide list}
 
 
 let nucleotide_of_char = function
@@ -12,23 +12,32 @@ let nucleotide_of_char = function
 
 let parse_input lines =
   let parse line =
-    let _, str = Scanf.sscanf line "%d:%s" (fun id s -> (id, s)) in
-    {dna = str |> String.to_seq |> Seq.map nucleotide_of_char |> List.of_seq} in
+    let id, str = Scanf.sscanf line "%d:%s" (fun id s -> (id, s)) in
+    {id; dna = str |> String.to_seq |> Seq.map nucleotide_of_char |> List.of_seq} in
   List.map parse lines
 
 
-let calc_similarity s1 s2 =
+let calc_similarity {dna = s1; _} {dna = s2; _} =
   List.fold_left2 (fun acc n1 n2 -> if n1 = n2 then acc + 1 else acc) 0 s1 s2
 
 
-let is_child_of_parents p1 p2 s =
-  let parent_pairs = Seq.zip (List.to_seq p2) (List.to_seq p1) in
-  Seq.for_all2 (fun (a, b) c -> c = a || c = b) parent_pairs (List.to_seq s)
+let is_child_of_parents ({id = id1; dna = dna1}, {id = id2; dna = dna2}) {id = id3; dna = dna3} =
+  if id1 = id3 || id2 = id3 then false
+  else
+    let parent_nucleotides = Seq.zip (List.to_seq dna1) (List.to_seq dna2) in
+    Seq.for_all2 (fun (a, b) c -> c = a || c = b) parent_nucleotides (List.to_seq dna3)
 
 
-let calc_degree_of_similarity_for_three_dnas = function
-  | [{dna = s1; _}; {dna = s2; _}; {dna = s3; _}] ->
-      if is_child_of_parents s2 s3 s1 then (calc_similarity s1 s2) * (calc_similarity s1 s3)
-      else if is_child_of_parents s1 s3 s2 then (calc_similarity s2 s1) * (calc_similarity s2 s3)
-      else (calc_similarity s3 s1) * (calc_similarity s3 s2)
-  | _ -> failwith ("Unexpected number of lines.")
+let calc_degree_of_similarity_sum scales =
+  let calc_score ((p1, p2) as parents) child =
+    if is_child_of_parents parents child then
+      let sim1 = calc_similarity p1 child in
+      let sim2 = calc_similarity p2 child in
+      sim1 * sim2
+    else 0 in
+  let dnas = List.to_seq scales in
+  dnas
+    |> Seq.product dnas
+    |> Seq.filter (fun ({id = id1; _}, {id = id2; _}) -> id1 < id2)
+    |> Seq.map (fun parents -> Seq.fold_left (fun acc child -> acc + calc_score parents child) 0 dnas)
+    |> Seq.fold_left (+) 0
