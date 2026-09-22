@@ -4,3 +4,5 @@ type hero
 val parse_input : string -> hero list
 
 val count_mentor_novice_pairs : hero list -> profession -> int
+
+val count_nearby_mentor_novice_pairs : hero list -> int -> int -> int
