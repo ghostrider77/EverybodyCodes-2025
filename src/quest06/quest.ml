@@ -2,7 +2,7 @@ type rank = Knight | Novice
 type profession = SwordFighter | Archer | Magician
 type hero = {profession : profession; rank : rank}
 
-let hero_of_string = function
+let hero_of_char = function
   | 'a' -> {profession = SwordFighter; rank = Novice}
   | 'A' -> {profession = SwordFighter; rank = Knight}
   | 'b' -> {profession = Archer; rank = Novice}
@@ -15,7 +15,7 @@ let hero_of_string = function
 let parse_input str =
   str
     |> String.to_seq
-    |> Seq.map hero_of_string
+    |> Seq.map hero_of_char
     |> List.of_seq
 
 
