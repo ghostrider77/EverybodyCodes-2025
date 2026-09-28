@@ -10,6 +10,13 @@ let tests =
       let result = Quest.calc_nr_times_thread_passes_through_center nr_nails nails in
       assert_equal expected result ~printer:(Printf.sprintf "%d")
       );
+
+    "should calculate the number of times a thread intersects other threads" >:: (fun _ ->
+      let nails = [1; 5; 2; 6; 8; 4; 1; 7; 3; 5; 7; 8; 2] in
+      let expected = 21 in
+      let result = Quest.calc_total_nr_intersections nails in
+      assert_equal expected result ~printer:(Printf.sprintf "%d")
+      );
   ]
 
 
