@@ -17,6 +17,14 @@ let tests =
       let result = Quest.calc_total_nr_intersections nails in
       assert_equal expected result ~printer:(Printf.sprintf "%d")
       );
+
+    "should calculate the cut with the maximum number of crossings" >:: (fun _ ->
+      let nails = [1; 5; 2; 6; 8; 4; 1; 7; 3; 6] in
+      let nr_nails = 8 in
+      let expected = 7 in
+      let result = Quest.find_max_number_of_crossings nr_nails nails in
+      assert_equal expected result ~printer:(Printf.sprintf "%d")
+      );
   ]
 
 
