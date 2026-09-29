@@ -7,7 +7,7 @@ module CellSet = Set.Make(
   end
 )
 
-type board = {nr_rows : int; nr_cols : int; sheep : CellSet.t; hideouts: CellSet.t}
+type board = {nr_rows : int; nr_cols : int; sheep : CellSet.t; hideouts : CellSet.t}
 
 
 let parse_input = function
