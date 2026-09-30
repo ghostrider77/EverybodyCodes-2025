@@ -50,3 +50,21 @@ let flock_rearrangement xs nr_rounds =
             if flock' = flock then aux flock' Second nr_rounds
             else aux flock' Second (k + 1) in
   aux xs First 0
+
+
+let get_nr_rounds_to_balance_the_flock xs =
+  let n = List.length xs in
+  let sum = List.fold_left (+) 0 xs in
+  let d = sum / n in
+  let rec aux flock phase round =
+    match phase with
+      | First ->
+          let flock' = first_phase_round flock n in
+          if flock' = flock then aux flock' Second round
+          else aux flock' First (round + 1)
+      | Second ->
+          if List.for_all ((=) d) flock then round
+          else
+            let flock' = second_phase_round flock n in
+            aux flock' Second (round + 1) in
+  aux xs First 0
