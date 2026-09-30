@@ -24,6 +24,13 @@ let tests =
       let expected = 1579 in
       assert_equal expected result ~printer:(Printf.sprintf "%d")
       );
+
+    "should calculate number of rounds that balance the flock that is already monotone increasing" >:: (fun _ ->
+      let flock = [3; 4; 4; 4; 7; 8] in
+      let result = Quest.get_nr_rounds_to_balance_the_flock flock in
+      let expected = 5 in
+      assert_equal expected result ~printer:(Printf.sprintf "%d")
+      );
   ]
 
 
