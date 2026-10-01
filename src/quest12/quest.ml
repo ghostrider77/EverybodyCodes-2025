@@ -30,12 +30,21 @@ let get_neighbors {nr_rows; nr_cols; barrels} {x; y} =
   List.filter (fun ({x = a; y = b} as cell) -> is_valid cell && get_value a b <= barrel) ns
 
 
-let find_ignited_barrels grid start_barrels =
+let extract_largest_component components =
+  match List.sort (fun a b -> compare (CoordSet.cardinal b) (CoordSet.cardinal a)) components with
+    | [] -> (0, [])
+    | largest :: rest ->
+        let size = CoordSet.cardinal largest in
+        let component_diffs = List.map (fun component -> CoordSet.diff component largest) rest in
+        (size, component_diffs)
+
+
+let find_component grid start_barrels =
   let queue = Queue.create () in
   Queue.add_seq queue (List.to_seq start_barrels);
   let rec aux visited =
     match Queue.take_opt queue with
-      | None -> CoordSet.cardinal visited
+      | None -> visited
       | Some coord ->
           let neighbors =
             coord
@@ -45,3 +54,24 @@ let find_ignited_barrels grid start_barrels =
           Queue.add_seq queue neighbors;
           aux (CoordSet.add_seq neighbors visited) in
   aux CoordSet.(empty |> add_seq (List.to_seq start_barrels))
+
+
+let find_ignited_barrels grid start_barrels =
+  let component = find_component grid start_barrels in
+  CoordSet.cardinal component
+
+
+let find_greedy_largest_components ({nr_rows; nr_cols; _} as grid) k =
+  let rec aux components = function
+    | [] ->
+        let range = Seq.init k Fun.id in
+        range
+          |> Seq.fold_left (fun (s, c) _ -> let (n, c') = extract_largest_component c in (s + n, c')) (0, components)
+          |> fst
+    | coord :: rest ->
+        if List.exists (fun component -> CoordSet.mem coord component) components then aux components rest
+        else
+          let component = find_component grid (List.singleton coord) in
+          aux (component :: components) rest in
+  let coords = Seq.map (fun (x, y) -> {x; y}) @@ Seq.product (Seq.init nr_rows Fun.id) (Seq.init nr_cols Fun.id) in
+  aux [] (List.of_seq coords)
