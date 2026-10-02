@@ -2,7 +2,7 @@ open OUnit2
 
 
 let tests =
-  "quest10" >::: [
+  "quest12" >::: [
     "should return the number of ignited barrels if we start it from the top left" >:: (fun _ ->
       let input = [
         "989601";

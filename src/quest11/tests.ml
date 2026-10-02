@@ -2,7 +2,7 @@ open OUnit2
 
 
 let tests =
-  "quest10" >::: [
+  "quest11" >::: [
     "should perform a given amount of rounds in flock rearrangement" >:: (fun _ ->
       let flock = [9; 1; 1; 4; 9; 6] in
       let nr_rounds = 10 in
