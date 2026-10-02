@@ -30,6 +30,16 @@ let get_neighbors {nr_rows; nr_cols; barrels} {x; y} =
   List.filter (fun ({x = a; y = b} as cell) -> is_valid cell && get_value a b <= barrel) ns
 
 
+let get_descending_coords barrels =
+  barrels
+    |> Iarray.to_seqi
+    |> Seq.map (fun (x, row) -> Seq.mapi (fun y b -> ({x; y}, b)) (Iarray.to_seq row))
+    |> Seq.concat
+    |> List.of_seq
+    |> List.sort (fun (_, b1) (_, b2) -> compare b2 b1)
+    |> List.map fst
+
+
 let extract_largest_component components =
   match List.sort (fun a b -> compare (CoordSet.cardinal b) (CoordSet.cardinal a)) components with
     | [] -> (0, [])
@@ -61,7 +71,7 @@ let find_ignited_barrels grid start_barrels =
   CoordSet.cardinal component
 
 
-let find_greedy_largest_components ({nr_rows; nr_cols; _} as grid) k =
+let find_greedy_largest_components ({barrels; _} as grid) k =
   let rec aux components = function
     | [] ->
         let range = Seq.init k Fun.id in
@@ -73,5 +83,5 @@ let find_greedy_largest_components ({nr_rows; nr_cols; _} as grid) k =
         else
           let component = find_component grid (List.singleton coord) in
           aux (component :: components) rest in
-  let coords = Seq.map (fun (x, y) -> {x; y}) @@ Seq.product (Seq.init nr_rows Fun.id) (Seq.init nr_cols Fun.id) in
-  aux [] (List.of_seq coords)
+  let coords = get_descending_coords barrels in
+  aux [] coords
