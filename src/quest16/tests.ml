@@ -10,6 +10,13 @@ let tests =
       let expected = 193 in
       assert_equal expected result ~printer:(Printf.sprintf "%d")
       );
+
+    "should calculate the product of numbers that produces a given block structure" >:: (fun _ ->
+      let blocks = [1; 2; 2; 2; 2; 3; 1; 2; 3; 3; 1; 3; 1; 2; 3; 2; 1; 4; 1; 3; 2; 2; 1; 3; 2; 2] in
+      let result = Quest.calc_product_of_recreated_numbers blocks in
+      let expected = 270 in
+      assert_equal expected result ~printer:(Printf.sprintf "%d")
+      );
   ]
 
 
