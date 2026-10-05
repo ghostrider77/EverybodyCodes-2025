@@ -32,11 +32,11 @@ let calc_product_of_recreated_numbers blocks =
 let get_wall_length blocks nr_available_blocks =
   let ns = get_recreated_numbers blocks in
   let rec aux low high =
-    if low >= high then low
+    if low >= high then low - 1
     else
       let mid = (low + high) / 2 in
       let used_blocks = calc_nr_of_blocks ns mid in
-      if used_blocks = nr_available_blocks then low
-      else if used_blocks > nr_available_blocks then aux low (mid - 1)
+      if used_blocks = nr_available_blocks then mid
+      else if used_blocks > nr_available_blocks then aux low mid
       else aux (mid + 1) high in
   aux 0 nr_available_blocks
