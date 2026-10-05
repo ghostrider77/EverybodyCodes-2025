@@ -17,6 +17,14 @@ let tests =
       let expected = 270 in
       assert_equal expected result ~printer:(Printf.sprintf "%d")
       );
+
+    "should calculate maximal length of the wall when the number of available bricks are given" >:: (fun _ ->
+      let blocks = [1; 2; 2; 2; 2; 3; 1; 2; 3; 3; 1; 3; 1; 2; 3; 2; 1; 4; 1; 3; 2; 2; 1; 3; 2; 2] in
+      let nr_available_blocks = 202520252025000 in
+      let result = Quest.get_wall_length blocks nr_available_blocks in
+      let expected = 94439495762954 in
+      assert_equal expected result ~printer:(Printf.sprintf "%d")
+      );
   ]
 
 
