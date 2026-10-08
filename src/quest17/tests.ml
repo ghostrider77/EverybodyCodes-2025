@@ -33,6 +33,28 @@ let tests =
       let expected = 1573 in
       assert_equal expected result ~printer:(Printf.sprintf "%d")
       );
+
+    "should calculate the value of the largest destruction" >:: (fun _ ->
+      let input = [
+        "4547488458944";
+        "9786999467759";
+        "6969499575989";
+        "7775645848998";
+        "6659696497857";
+        "5569777444746";
+        "968586@767979";
+        "6476956899989";
+        "5659745697598";
+        "6874989897744";
+        "6479994574886";
+        "6694118785585";
+        "9568991647449";
+      ] in
+      let grid = Quest.parse_input input in
+      let result = Quest.calc_largest_destruction grid in
+      let expected = 1090 in
+      assert_equal expected result ~printer:(Printf.sprintf "%d")
+      );
   ]
 
 
